@@ -1,6 +1,12 @@
 const express = require("express")
 const mongoose = require("mongoose");
 const http = require("http");
+const Redis = require("ioredis");
+const redisClient = new Redis({
+    port: 6379, // Redis port
+    host: "localhost", // Redis host
+})
+
 
 const { ValidationError } = require('express-validation')
 
@@ -17,6 +23,8 @@ app.use(require("./routes/signup"));
 app.use(require("./routes/signin"));
 app.use(require("./routes/profile"));
 app.use(require("./routes/consultantList"));
+app.use(require("./routes/chat"));
+
 
 
 
@@ -35,19 +43,16 @@ const server = app.listen(process.env.PORT || 5000, function () {
 
 const io = require("socket.io")(server);
 
-
 io.on("connection", socket => {
     console.log("New client connected");
-    socket.emit("connect", "connecting");
-    
-    console.log("------>>", socket.id);
-
-    socket.on("join", async room => {
-        socket.join(room);
-        console.log("-----", room)
-        // io.emit("connect", room);
+    socket.on("join",async data=>{
+        console.log("id",data)
+        if(data && data.id){
+            console.log("setting socket for user");
+            await redisClient.set(data.id,socket.id);
+        }
     });
-    console.log("----sockets rooom", socket.adapter.rooms)
-
-    socket.on("disconnect", () => console.log("Client disconnected"));
+    socket.on("disconnect", () => {
+        console.log("Client disconnected")
+    });
 });

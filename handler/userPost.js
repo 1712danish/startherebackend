@@ -1,4 +1,4 @@
-const { UserPost } = require("../models/userPost")
+const { UserPost } = require("../models/userPost");
 
 exports.userPost = async (req, res) => {
     const { postTitle, postUrl ,description} = req.body
@@ -15,7 +15,7 @@ exports.userPost = async (req, res) => {
             userId: req.user
 
         }
-
+        io.on()
         // console.log("------------>",post)
         await new UserPost(post).save()
 
@@ -46,7 +46,7 @@ exports.getPost= async (req,res)=>{
             })
 
         }else{
-            console.log(Post)
+            // console.log(Post)
             return res.json(Post)
         }
 

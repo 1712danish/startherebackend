@@ -10,7 +10,7 @@ const { User } = require("../models/users")
 
 exports.Profile = async (req, res) => {
     req.body = JSON.parse(JSON.stringify(req.body));
-    console.log(req.body)
+    // console.log(req.body)
 
 
     if (req.user.role == "Learner") {

@@ -6,6 +6,7 @@ const messageSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+  
     from: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

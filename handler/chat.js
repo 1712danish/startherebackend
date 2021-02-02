@@ -9,11 +9,13 @@ const redisClient = new Redis({
 
 exports.chat = async (req, res) => {
     const io = require("../io");
-    const { to, from, message } = req.body
+    const { to, from, message, recievername } = req.body
+    console.log(req.body)
 
     try {
         const newMssg = {
             to,
+            recievername,
             from,
             message
         }

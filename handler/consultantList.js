@@ -11,7 +11,7 @@ exports.consultantList = async (req, res) => {
 
             // console.log(result[0].areaOfInterest)
             
-                const consultant = await Consultant.find({ skills  : { "$in": result[0].areaOfInterest}}).populate("userId", "skills name email imageUrl")
+                const consultant = await Consultant.find({ skills  : { "$in": result[0].areaOfInterest}}).te("userId", "skills name email imageUrl")
                 // console.log(consultant)
                 res.json(consultant)
 
@@ -28,7 +28,7 @@ exports.consultantList = async (req, res) => {
             // console.log(result[0].areaOfInterest)
             
                 const learner = await Learner.find({ areaOfInterest  : { "$in": result[0].skills}}).populate("userId", "areaOfInterest name email imageUrl")
-                console.log(learner)
+                // console.log(learner)
                 res.json(learner)
 
 
